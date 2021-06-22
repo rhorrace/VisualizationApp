@@ -18,8 +18,10 @@ namespace Engines
         private static int maxValue;
         private static Brush whiteBrush = new SolidBrush(Color.White);
         private static Brush blackBrush = new SolidBrush(Color.Black);
+        private static Brush redBrush = new SolidBrush(Color.Red);
         public static void Swap(int x, int y)
         {
+            Thread.Sleep(1);
             if (values == null)
                 return;
             int temp = values[x];
@@ -34,6 +36,12 @@ namespace Engines
         {
             graph.FillRectangle(blackBrush, x, 0, 1, maxValue);
             graph.FillRectangle(whiteBrush, x, maxValue - values[x], 1, maxValue);
+        }
+
+        private static void UpdateLineColor(int x, Brush brush)
+        {
+            graph.FillRectangle(blackBrush, x, 0, 1, maxValue);
+            graph.FillRectangle(brush, x, maxValue - values[x], 1, maxValue);
         }
 
         public static void ShuffleFY(Graphics g, int[] array, int max)
@@ -63,8 +71,10 @@ namespace Engines
             for (int i = 0;i < n - 1;++i)
                 for(int j = 0;j < n - i - 1;++j)
                 {
+                    UpdateLineColor(j, redBrush);
                     if (array[j] > array[j+1])
                         Swap(j, j + 1);
+                    UpdateLineColor(j, whiteBrush);
                 }
         }
 
@@ -84,11 +94,15 @@ namespace Engines
 
                 while (j >= 0 && array[j] > k)
                 {
+                    UpdateLineColor(j + 1, redBrush);
+                    Thread.Sleep(1);
                     array[j + 1] = array[j];
                     UpdateGraph(j + 1);
                     --j;
                 }
 
+                UpdateLineColor(j + 1, redBrush);
+                Thread.Sleep(1);
                 array[j + 1] = k;
                 UpdateGraph(j + 1);
             }
@@ -106,10 +120,12 @@ namespace Engines
             {
                 int min_idx = i;
                 for (int j = i + 1; j < n; j++)
+                {
+                    UpdateLineColor(j, redBrush);
                     if (values[j] < values[min_idx])
                         min_idx = j;
-
-                Thread.Sleep(10);
+                    UpdateGraph(j);
+                }
                 Swap(i, min_idx);
             }
         }
@@ -127,8 +143,9 @@ namespace Engines
 
             for (int i = n - 1; i > 0; --i)
             {
+                UpdateLineColor(i, redBrush);
                 Swap(0, i);
-
+                UpdateGraph(i);
                 Heapify(i, 0);
             }
         }
@@ -148,9 +165,10 @@ namespace Engines
             // If largest is not root
             if (largest != i)
             {
+                UpdateLineColor(largest, redBrush);
                 Swap(i, largest);
+                UpdateGraph(largest);
                 Heapify(n, largest);
-                Thread.Sleep(1);
             }
         }
 
@@ -190,14 +208,24 @@ namespace Engines
             int k = l;
             while (i < n1 && j < n2)
             {
-                values[k] = (L[i] <= R[j]) ? L[i++] : R[j++];
+                UpdateLineColor(k, redBrush);
                 Thread.Sleep(1);
+                if (L[i] <= R[j])
+                {
+                    values[k] = L[i++];
+                }
+                else
+                {
+                    values[k] = R[j++];
+                }
                 UpdateGraph(k);
                 ++k;
             }
 
             while(i < n1)
             {
+                UpdateLineColor(k, redBrush);
+                Thread.Sleep(1);
                 values[k] = L[i++];
                 UpdateGraph(k);
                 ++k;
@@ -205,6 +233,8 @@ namespace Engines
 
             while (j < n2)
             {
+                UpdateLineColor(k, redBrush);
+                Thread.Sleep(1);
                 values[k] = R[j++];
                 UpdateGraph(k);
                 ++k;
@@ -242,12 +272,12 @@ namespace Engines
             {
                 if (values[j] < pivot)
                 {
-                    Thread.Sleep(1);
+                    UpdateLineColor(j, redBrush);
                     ++i;
                     Swap(i, j);
+                    UpdateGraph(j);
                 }
             }
-            Thread.Sleep(1);
             Swap(i + 1, high);
             return i + 1;
         }
