@@ -33,13 +33,14 @@ namespace WindowsFormsApp
             this.ButtonStart = new System.Windows.Forms.Button();
             this.PanelGraph = new System.Windows.Forms.Panel();
             this.ButtonRandomize = new System.Windows.Forms.Button();
+            this.DropdownSorts = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // ButtonReset
             // 
-            this.ButtonReset.Location = new System.Drawing.Point(614, 12);
+            this.ButtonReset.Location = new System.Drawing.Point(707, 12);
             this.ButtonReset.Name = "ButtonReset";
-            this.ButtonReset.Size = new System.Drawing.Size(174, 35);
+            this.ButtonReset.Size = new System.Drawing.Size(81, 35);
             this.ButtonReset.TabIndex = 3;
             this.ButtonReset.Text = "Reset";
             this.ButtonReset.UseVisualStyleBackColor = true;
@@ -47,9 +48,9 @@ namespace WindowsFormsApp
             // 
             // ButtonStart
             // 
-            this.ButtonStart.Location = new System.Drawing.Point(434, 12);
+            this.ButtonStart.Location = new System.Drawing.Point(621, 12);
             this.ButtonStart.Name = "ButtonStart";
-            this.ButtonStart.Size = new System.Drawing.Size(174, 35);
+            this.ButtonStart.Size = new System.Drawing.Size(80, 35);
             this.ButtonStart.TabIndex = 2;
             this.ButtonStart.Text = "Start";
             this.ButtonStart.UseVisualStyleBackColor = true;
@@ -64,19 +65,37 @@ namespace WindowsFormsApp
             // 
             // ButtonRandomize
             // 
-            this.ButtonRandomize.Location = new System.Drawing.Point(254, 12);
+            this.ButtonRandomize.Location = new System.Drawing.Point(499, 12);
             this.ButtonRandomize.Name = "ButtonRandomize";
-            this.ButtonRandomize.Size = new System.Drawing.Size(174, 35);
+            this.ButtonRandomize.Size = new System.Drawing.Size(116, 35);
             this.ButtonRandomize.TabIndex = 1;
             this.ButtonRandomize.Text = "Randomize";
             this.ButtonRandomize.UseVisualStyleBackColor = true;
             this.ButtonRandomize.Click += new System.EventHandler(this.ButtonRandomize_Click);
+            // 
+            // DropdownSorts
+            // 
+            this.DropdownSorts.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.DropdownSorts.FormattingEnabled = true;
+            this.DropdownSorts.Items.AddRange(new object[] {
+            "Bubble",
+            "Insertion",
+            "Selection",
+            "Heap",
+            "Merge",
+            "Quick",
+            "Counting"});
+            this.DropdownSorts.Location = new System.Drawing.Point(12, 12);
+            this.DropdownSorts.Name = "DropdownSorts";
+            this.DropdownSorts.Size = new System.Drawing.Size(247, 28);
+            this.DropdownSorts.TabIndex = 5;
             // 
             // Visualizer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.DropdownSorts);
             this.Controls.Add(this.ButtonRandomize);
             this.Controls.Add(this.PanelGraph);
             this.Controls.Add(this.ButtonStart);
@@ -93,6 +112,7 @@ namespace WindowsFormsApp
         private System.Windows.Forms.Button ButtonStart;
         private System.Windows.Forms.Panel PanelGraph;
         private System.Windows.Forms.Button ButtonRandomize;
+        private System.Windows.Forms.ComboBox DropdownSorts;
     }
 }
 

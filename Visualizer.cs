@@ -38,7 +38,35 @@ namespace WindowsFormsApp
 
         private void ButtonStart_Click(object sender, EventArgs e)
         {
-            Engines.SortsShuffles.QuickSort(graph, values, PanelGraph.Height);
+            if (DropdownSorts.SelectedItem == null)
+                return;
+
+            switch(DropdownSorts.SelectedItem.ToString())
+            {
+                case "Bubble":
+                    Engines.SortsShuffles.BubbleSort(graph, values, PanelGraph.Height);
+                    break;
+                case "Insertion":
+                    Engines.SortsShuffles.InsertionSort(graph, values, PanelGraph.Height);
+                    break;
+                case "Selection":
+                    Engines.SortsShuffles.SelectionSort(graph, values, PanelGraph.Height);
+                    break;
+                case "Heap":
+                    Engines.SortsShuffles.HeapSort(graph, values, PanelGraph.Height);
+                    break;
+                case "Merge":
+                    Engines.SortsShuffles.MergeSort(graph, values, PanelGraph.Height);
+                    break;
+                case "Quick":
+                    Engines.SortsShuffles.QuickSort(graph, values, PanelGraph.Height);
+                    break;
+                case "Counting":
+                    Engines.SortsShuffles.CountingSort(graph, values, PanelGraph.Height);
+                    break;
+                default:
+                    break;
+            }
         }
 
 

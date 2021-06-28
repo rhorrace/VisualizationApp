@@ -19,30 +19,8 @@ namespace Engines
         private static Brush whiteBrush = new SolidBrush(Color.White);
         private static Brush blackBrush = new SolidBrush(Color.Black);
         private static Brush redBrush = new SolidBrush(Color.Red);
-        public static void Swap(int x, int y)
-        {
-            Thread.Sleep(1);
-            if (values == null)
-                return;
-            int temp = values[x];
-            values[x] = values[y];
-            values[y] = temp;
 
-            UpdateGraph(x);
-            UpdateGraph(y);
-        }
-
-        private static void UpdateGraph(int x)
-        {
-            graph.FillRectangle(blackBrush, x, 0, 1, maxValue);
-            graph.FillRectangle(whiteBrush, x, maxValue - values[x], 1, maxValue);
-        }
-
-        private static void UpdateLineColor(int x, Brush brush)
-        {
-            graph.FillRectangle(blackBrush, x, 0, 1, maxValue);
-            graph.FillRectangle(brush, x, maxValue - values[x], 1, maxValue);
-        }
+        #region Shuffles
 
         public static void ShuffleFY(Graphics g, int[] array, int max)
         {
@@ -59,6 +37,12 @@ namespace Engines
                 Swap(i, r);
             }
         }
+
+        #endregion
+
+        #region Sorts
+
+        #region Bubble Sort
 
         public static void BubbleSort(Graphics g, int[] array, int max)
         {
@@ -78,6 +62,9 @@ namespace Engines
                 }
         }
 
+        #endregion
+
+        #region Insertion Sort
         public static void InsertionSort(Graphics g, int[] array, int max)
         {
             if (array == null || g == null)
@@ -95,18 +82,20 @@ namespace Engines
                 while (j >= 0 && array[j] > k)
                 {
                     UpdateLineColor(j + 1, redBrush);
-                    Thread.Sleep(1);
                     array[j + 1] = array[j];
                     UpdateGraph(j + 1);
                     --j;
                 }
 
                 UpdateLineColor(j + 1, redBrush);
-                Thread.Sleep(1);
                 array[j + 1] = k;
                 UpdateGraph(j + 1);
             }
         }
+
+        #endregion
+
+        #region Selection Sort
 
         public static void SelectionSort(Graphics g, int[] array, int max)
         {
@@ -129,6 +118,10 @@ namespace Engines
                 Swap(i, min_idx);
             }
         }
+
+        #endregion
+
+        #region Heap Sort
 
         public static void HeapSort(Graphics g, int[] array, int max)
         {
@@ -172,6 +165,10 @@ namespace Engines
             }
         }
 
+        #endregion
+
+        #region Merge Sort
+
         public static void MergeSort(Graphics g, int[] array, int max)
         {
             if (array == null || g == null)
@@ -190,11 +187,11 @@ namespace Engines
                 int m = l + (r - l) / 2;
                 MergeSortHelper(l, m);
                 MergeSortHelper(m + 1, r);
-                merge(l, m, r);
+                Merge(l, m, r);
             }
         }
 
-        private static void merge(int l, int m, int r)
+        private static void Merge(int l, int m, int r)
         {
             int n1 = m - l + 1, n2 = r - m, i, j;
             int[] L = new int[n1];
@@ -241,6 +238,10 @@ namespace Engines
             }
         }
 
+        #endregion
+
+        #region Quick Sort
+
         public static void QuickSort(Graphics g, int[] array, int max)
         {
             if (array == null || g == null)
@@ -278,8 +279,85 @@ namespace Engines
                     UpdateGraph(j);
                 }
             }
+            UpdateLineColor(i  + 1, redBrush);
             Swap(i + 1, high);
+            UpdateGraph(i + 1);
             return i + 1;
         }
+
+        #endregion
+
+        #region Counting Sort
+
+        public static void CountingSort(Graphics g, int[] array, int max)
+        {
+            if (array == null || g == null)
+                return;
+            values = array;
+            graph = g;
+            maxValue = max;
+            int n = values.Length;
+            int[] output = new int[n];
+            int[] count = new int[maxValue + 1];
+            for (int i = 0; i <= maxValue; ++i)
+                count[i] = 0;
+            for (int i = 0; i < n; ++i)
+            {
+                UpdateLineColor(i, redBrush);
+                Thread.Sleep(1);
+                ++count[values[i]];
+                UpdateLineColor(i, whiteBrush);
+            }
+            for (int i = 1; i <= maxValue; ++i)
+                count[i] += count[i - 1];
+            for (int i = 0; i < n; ++i)
+            {
+                UpdateLineColor(i, redBrush);
+                Thread.Sleep(1);
+                output[count[values[i]] - 1] = values[i];
+                --count[values[i]];
+                UpdateLineColor(i, whiteBrush);
+            }
+            for (int i = 0; i < n; ++i)
+            {
+                UpdateLineColor(i, redBrush);
+                Thread.Sleep(1);
+                values[i] = output[i];
+                UpdateLineColor(i, whiteBrush);
+            }
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Other Methods
+
+        private static void Swap(int x, int y)
+        {
+            Thread.Sleep(1);
+            if (values == null)
+                return;
+            int temp = values[x];
+            values[x] = values[y];
+            values[y] = temp;
+
+            UpdateGraph(x);
+            UpdateGraph(y);
+        }
+
+        private static void UpdateGraph(int x)
+        {
+            graph.FillRectangle(blackBrush, x, 0, 1, maxValue);
+            graph.FillRectangle(whiteBrush, x, maxValue - values[x], 1, maxValue);
+        }
+
+        private static void UpdateLineColor(int x, Brush brush)
+        {
+            graph.FillRectangle(blackBrush, x, 0, 1, maxValue);
+            graph.FillRectangle(brush, x, maxValue - values[x], 1, maxValue);
+        }
+
+        #endregion
     }
 }
