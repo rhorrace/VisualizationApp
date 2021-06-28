@@ -84,7 +84,8 @@ namespace WindowsFormsApp
             "Heap",
             "Merge",
             "Quick",
-            "Counting"});
+            "Counting",
+            "Radix"});
             this.DropdownSorts.Location = new System.Drawing.Point(12, 12);
             this.DropdownSorts.Name = "DropdownSorts";
             this.DropdownSorts.Size = new System.Drawing.Size(247, 28);

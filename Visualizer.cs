@@ -64,6 +64,9 @@ namespace WindowsFormsApp
                 case "Counting":
                     Engines.SortsShuffles.CountingSort(graph, values, PanelGraph.Height);
                     break;
+                case "Radix":
+                    Engines.SortsShuffles.RadixSort(graph, values, PanelGraph.Height);
+                    break;
                 default:
                     break;
             }

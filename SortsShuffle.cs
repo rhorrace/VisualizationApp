@@ -310,13 +310,10 @@ namespace Engines
             }
             for (int i = 1; i <= maxValue; ++i)
                 count[i] += count[i - 1];
-            for (int i = 0; i < n; ++i)
+            for (int i = n - 1; i >= 0; --i)
             {
-                UpdateLineColor(i, redBrush);
-                Thread.Sleep(1);
                 output[count[values[i]] - 1] = values[i];
                 --count[values[i]];
-                UpdateLineColor(i, whiteBrush);
             }
             for (int i = 0; i < n; ++i)
             {
@@ -324,6 +321,48 @@ namespace Engines
                 Thread.Sleep(1);
                 values[i] = output[i];
                 UpdateLineColor(i, whiteBrush);
+            }
+        }
+
+        #endregion
+
+        #region Radix Sort
+
+        public static void RadixSort(Graphics g, int[] array, int max)
+        {
+            if (array == null || g == null)
+                return;
+            values = array;
+            graph = g;
+            maxValue = max;
+            int n = values.Length;
+            int[] digits = new int[10];
+            int[] output = new int[n];
+            for (int exp = 1; maxValue / exp > 0; exp *= 10)
+            {
+                for (int i = 0; i < 10; ++i)
+                    digits[i] = 0;
+                for (int i = 0; i < n; ++i)
+                {
+                    UpdateLineColor(i, redBrush);
+                    Thread.Sleep(1);
+                    ++digits[(values[i] / exp) % 10];
+                    UpdateLineColor(i, whiteBrush);
+                }
+                for (int i = 1; i < 10; ++i)
+                    digits[i] += digits[i - 1];
+                for (int i = n - 1; i >= 0; --i)
+                {
+                    int index = (values[i] / exp) % 10;
+                    output[--digits[index]] = values[i];
+                }
+                for (int i = 0; i < n; ++i)
+                {
+                    UpdateLineColor(i, redBrush);
+                    Thread.Sleep(1);
+                    values[i] = output[i];
+                    UpdateLineColor(i, whiteBrush);
+                }
             }
         }
 
